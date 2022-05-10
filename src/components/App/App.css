@@ -1,0 +1,35 @@
+.App {
+  max-width: 1280px;
+  margin: 0 auto;
+  font-family: "inter", 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+.body {
+  background-color: inherit;
+}
+
+.app__link-outside{
+  text-decoration: none;
+  transition: color .3s ease-in;
+}
+
+.app__link-outside:hover{
+  color: #2be080;
+  cursor: pointer;
+}
+
+.app__link{
+  text-decoration: none;
+  transition: opacity .3s ease-in;
+}
+
+.app__link:hover{
+  cursor: pointer;
+  opacity: .4;
+}
