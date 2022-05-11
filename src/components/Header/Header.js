@@ -1,7 +1,7 @@
 import './Header.css';
 import Navigation from '../Navigation/Navigation';
 import Logo from '../Logo/Logo';
-import { Route } from 'react-router';
+import { Route } from 'react-router-dom';
 const endpoints = ['/', '/profile', '/movies', '/saved-movies'];
 function Header(props) {
   return(
