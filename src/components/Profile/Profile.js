@@ -2,9 +2,11 @@ import './Profile.css';
 import React from 'react';
 
 
-function Profile() {
+function Profile({moviesPage, handleMoviesPage}) {
   const [isInputActive, setIsInputActive] = React.useState(false);
-
+  React.useEffect(() => {
+    handleMoviesPage(true);
+  },[moviesPage, handleMoviesPage]);
 
   function handleRedactClick() {
     setIsInputActive(true);

@@ -1,7 +1,7 @@
 import './App.css';
 import React from 'react';
 import { Route, Switch} from 'react-router-dom';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+// import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Preloader from '../Preloader/Preloader';
 import Main from '../Main/Main';
 import Header from '../Header/Header';
@@ -16,8 +16,9 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 
 function App() {
   const [isLoading, setIsLoading] = React.useState(false);
-  const [loggedIn, setLoggedIn] = React.useState(true);                                  // стоит true для просмотра всех страниц а так же для просмотра изменения навигации в header, если поставить false, то часть страниц будет недоступна и изменится header
+  const [loggedIn, setLoggedIn] = React.useState(false);                                  // стоит true для просмотра всех страниц а так же для просмотра изменения навигации в header, если поставить false, то часть страниц будет недоступна и изменится header
   const [isInfoTooltipOpen, setInfoTooltipOpened] = React.useState(false);                //переменная для управления открытия popup infoTool
+  const [moviesPage, setMoviesPage] = React.useState(false);
   const savedMoviesList = [                                                               // пробный массив с фильмами
     {
       "id": 1,
@@ -275,9 +276,9 @@ function App() {
           <Preloader />
         ) : (
           <>
-            <Header loggedIn={loggedIn} />
+            <Header moviesPage={moviesPage} loggedIn={loggedIn} />
             <Switch>
-              <ProtectedRoute
+              {/* <ProtectedRoute
                 exact path='/movies'
                 loggedIn={loggedIn}
                 component={Movies}
@@ -297,10 +298,21 @@ function App() {
                 exact path='/profile'
                 loggedIn={loggedIn}
                 component={Profile}
-              />
+              /> */}
+              <Route path='/movies'>
+                <Movies moviesPage={moviesPage} handleMoviesPage={setMoviesPage} SavedMoviesPage={false} MoviesList={savedMoviesList} isLoading={isLoading}/>
+              </Route>
+
+              <Route path='/saved-movies'>
+                <SavedMovies moviesPage={moviesPage} handleMoviesPage={setMoviesPage} SavedMoviesPage={true} SavedMoviesList={savedMoviesList} isLoading={isLoading}/>
+              </Route>
+
+              <Route path='/profile'>
+                <Profile moviesPage={moviesPage} handleMoviesPage={setMoviesPage}/>
+              </Route>
 
               <Route path='/' exact>
-                <Main />
+                <Main moviesPage={moviesPage} handleMoviesPage={setMoviesPage}/>
               </Route>
 
               <Route path='/signup'>

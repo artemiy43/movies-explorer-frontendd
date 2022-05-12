@@ -17,6 +17,10 @@
   justify-items: center;
 }
 
+.movies-list__box_saved-page {
+  padding-bottom: 250px;
+}
+
 .movies-list__more-btn{
   box-sizing: border-box;
   padding: 0;
@@ -41,4 +45,10 @@
   background-color: #000;
   color: #fff;
   cursor: pointer;
+}
+
+@media screen and (max-width: 800px) {
+  .movies-list__box_saved-page {
+    padding-bottom: 150px;
+  }
 }

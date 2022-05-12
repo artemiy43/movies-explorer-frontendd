@@ -1,8 +1,13 @@
 import './SavedMovies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import React from 'react';
 
-function SavedMovies({SavedMoviesList, isLoading}) {
+function SavedMovies({SavedMoviesList, isLoading, SavedMoviesPage, moviesPage, handleMoviesPage}) {
+  React.useEffect(() => {
+    handleMoviesPage(true);
+    console.log(moviesPage);
+  },[moviesPage, handleMoviesPage]);
 
   return (
     <section className='savedMovies'>
@@ -10,6 +15,7 @@ function SavedMovies({SavedMoviesList, isLoading}) {
       <MoviesCardList
         isLoading={isLoading}
         list={SavedMoviesList}
+        SavedMoviesPage={SavedMoviesPage}
       />
     </section>
   );

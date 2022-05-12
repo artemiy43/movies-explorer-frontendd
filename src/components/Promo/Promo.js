@@ -11,7 +11,7 @@ function Promo() {
       <h1 className='promo__title'>Учебный проект студента факультета Веб-разработки.</h1>
       {/* <NavTab /> */}
       <p className='promo__subtitle'>Листайте ниже, чтобы узнать больше про этот проект и его создателя.</p>
-      <a class="promo__link" href="#AboutProject">Узнать больше</a>
+      <a className="promo__link" href="#AboutProject">Узнать больше</a>
     </section>
   );
 };

@@ -7,7 +7,7 @@ import React from 'react';
 function MoviesCardList({
   isLoading,
   list,
-  savedMoviesPage,
+  SavedMoviesPage,
 }) {
 
   return (
@@ -16,16 +16,17 @@ function MoviesCardList({
         <Preloader />
       ) : (
           <>
-            <div className='movies-list__box'>
+            <div className={SavedMoviesPage ? `movies-list__box movies-list__box_saved-page` : `movies-list__box`}>
               {list.map((item) => (
                   <MoviesCard
                     key={item.id}
                     card={{ ...item, _id: item.id }}
-                    liked={true}
+                    liked={false}
+                    savedPage={SavedMoviesPage}
                   />))}
             </div>
             <button
-              className='movies-list__more-btn'
+              className={SavedMoviesPage ? `movies-list__more-btn movies-list__more-btn_hidden` : `movies-list__more-btn`}
               type='button'
             >
               Ещё

@@ -112,8 +112,13 @@
   opacity: .1;
 }
 
-.movie__delete-btn{
-  background-size: 8px;
+.movie__delete-btn {
+  background: #FFFFFF;
+}
+
+.movie__delete-btn:hover {
+  background: #F9F9F9;
+  background-size: 100%;
   background-image: url('../../images/delete.svg');
 }
 

@@ -163,6 +163,7 @@ input:checked + .search-form__slider:before {
     padding-left: 19px;
     position: relative;
     background-color: #F9F9F9;
+    border-radius: 9px;
   }
 
   .search-form__checkbox {
