@@ -278,10 +278,10 @@ function App() {
     setLoggedIn(true);
   }
 
-  // React.useEffect(()=> {               //если меняется loggedIn
-  //   if (loggedIn)                      // если true
-  //     history.push('/movies');           // переходим
-  // },[loggedIn]);
+  React.useEffect(()=> {               //если меняется loggedIn
+    if (loggedIn)                      // если true
+      history.push('/movies');           // переходим
+  },[loggedIn]);
 
   React.useEffect(()=> {               //при монтировании app
     tokenCheck();                      // проверяем токен
@@ -380,36 +380,31 @@ function App() {
           <>
             <Header loggedIn={loggedIn} />
             <Switch>
-              if(currentUser!==={}) {
-                <ProtectedRoute
-                  path='/movies'
-                  loggedIn={loggedIn}
-                  component={Movies}
-                  SavedMoviesPage={false}
-                  MoviesList={savedMoviesList}
-                  isLoading={isLoading}
-                />
-                }
-                if(currentUser!==={}) {
-                <ProtectedRoute
-                  path='/saved-movies'
-                  loggedIn={loggedIn}
-                  component={SavedMovies}
-                  SavedMoviesPage={true}
-                  SavedMoviesList={savedMoviesList}
-                  isLoading={isLoading}
-                />
-                }
-                if(currentUser!==={}) {
-                <ProtectedRoute
-                  path='/profile'
-                  loggedIn={loggedIn}
-                  component={Profile}
-                  handleSignOut={handleSignOut}
-                  handleUpdateUser={handleUpdateUser}
-                  isError={isError}
-                />
-                }
+              <ProtectedRoute
+                path='/movies'
+                loggedIn={loggedIn}
+                component={Movies}
+                SavedMoviesPage={false}
+                MoviesList={savedMoviesList}
+                isLoading={isLoading}
+              />
+              <ProtectedRoute
+                path='/saved-movies'
+                loggedIn={loggedIn}
+                component={SavedMovies}
+                SavedMoviesPage={true}
+                SavedMoviesList={savedMoviesList}
+                isLoading={isLoading}
+              />
+              <ProtectedRoute
+                path='/profile'
+                loggedIn={loggedIn}
+                component={Profile}
+                handleSignOut={handleSignOut}
+                handleUpdateUser={handleUpdateUser}
+                isError={isError}
+              />
+
               <Route exact path='/'>
                 <Main />
               </Route>
