@@ -3,10 +3,8 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import React from 'react';
 
-function Movies({MoviesList, isLoading, SavedMoviesPage, moviesPage, handleMoviesPage}) {
-  React.useEffect(() => {
-    handleMoviesPage(true);
-  },[moviesPage, handleMoviesPage]);
+function Movies({ SavedMoviesPage, MoviesList, isLoading }) {
+  console.log('movies');
   return (
     <section className='movies'>
       <SearchForm/>

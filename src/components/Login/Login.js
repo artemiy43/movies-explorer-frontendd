@@ -1,16 +1,23 @@
 import './Login.css';
 import { Link } from 'react-router-dom';
 import Logo from '../Logo/Logo';
+import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 
+function Login(props) {
 
-function Login() {
+  const {values, errors, isValid, handleChange} = useFormWithValidation();
 
+  // ---ОБРАБОТЧИКИ---
+  function handleSubmit(e) {
+    e.preventDefault();
+    props.onSubmit(values.email, values.password);
+  };
 
   return (
     <section className='Login'>
       <Logo />
       <h2 className='Login__title'>Рады видеть!</h2>
-      <form className='Login__form'>
+      <form className='Login__form' onSubmit={handleSubmit}>
         <label className='Login__label'>E-mail
           <input
             id='email'
@@ -20,10 +27,10 @@ function Login() {
             minLength='2'
             maxLength='30'
             required
-            value='почта'
+            onChange={handleChange}
           />
           <span id='email-error' className='Login__error'>
-            Ошибка...
+            {errors.email || ''}
           </span>
         </label>
         <label className='Login__label'>Пароль
@@ -35,16 +42,17 @@ function Login() {
             minLength='4'
             maxLength='20'
             required
-            value='пароль'
+            onChange={handleChange}
           />
           <span id='password-error' className='Login__error'>
-            Ошибка...
+            {errors.password || ''}
           </span>
         </label>
 
         <button
           className='Login__submit-button app__link'
           type='submit'
+          disabled={!isValid}
         >
           Войти
         </button>

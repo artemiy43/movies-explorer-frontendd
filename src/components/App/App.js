@@ -1,7 +1,7 @@
 import './App.css';
 import React from 'react';
-import { Route, Switch} from 'react-router-dom';
-// import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import { Redirect, Route, Switch, useHistory} from 'react-router-dom';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import Preloader from '../Preloader/Preloader';
 import Main from '../Main/Main';
 import Header from '../Header/Header';
@@ -13,12 +13,20 @@ import Register from "../Register/Register";
 import Profile from "../Profile/Profile";
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
+import { mainApi } from "../../utils/MainApi";
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function App() {
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isError, setIsError] = React.useState(true);
   const [loggedIn, setLoggedIn] = React.useState(false);                                  // стоит true для просмотра всех страниц а так же для просмотра изменения навигации в header, если поставить false, то часть страниц будет недоступна и изменится header
   const [isInfoTooltipOpen, setInfoTooltipOpened] = React.useState(false);                //переменная для управления открытия popup infoTool
   const [moviesPage, setMoviesPage] = React.useState(false);
+  const [error, setError] = React.useState('');
+  const [currentUser, setCurrentUser] = React.useState({});                             //переменная для текущего пользователя
+  const [userMovies, setUserMovies] = React.useState([]);                                 //переменная для массива карточек
+
+  const history = useHistory();
   const savedMoviesList = [                                                               // пробный массив с фильмами
     {
       "id": 1,
@@ -266,61 +274,152 @@ function App() {
     }
   }
 ];
+  function handleLogin() {                     // функция для изменения состояния loggedIn
+    setLoggedIn(true);
+  }
+
+  // React.useEffect(()=> {               //если меняется loggedIn
+  //   if (loggedIn)                      // если true
+  //     history.push('/movies');           // переходим
+  // },[loggedIn]);
+
+  React.useEffect(()=> {               //при монтировании app
+    tokenCheck();                      // проверяем токен
+  },[]);
 
   function closePopup() {
     setInfoTooltipOpened(false);
   }
+
+  function handleRegisterUser(name, email, password){
+    setIsLoading(true);
+    mainApi.register(name, email, password)                //регистрируемся
+    .then((res)=> {
+      handleAuthoriseUser(email, password);
+    })
+    .catch((err) => {
+      setError(err.message);
+      setIsError(true);
+      setInfoTooltipOpened(true);
+    })
+    .finally(()=> {
+      setIsLoading(false);
+    });
+  }
+
+  function handleAuthoriseUser(email, password) {
+    setIsLoading(true);
+    mainApi.authorize(email, password)            // авторизируемся
+    .then((data) => {
+      localStorage.setItem('jwt', data.token);   // сохраняем токен в хранилище
+      tokenCheck();
+    })
+    .catch((err) => {
+      setError(err.message);
+      setIsError(true);
+      setInfoTooltipOpened(true);
+    })
+    .finally(()=> {
+      setIsLoading(false);
+    });
+  }
+
+  function tokenCheck() {
+    if (localStorage.getItem('jwt')){
+      const jwt = localStorage.getItem('jwt');
+      setIsLoading(true);
+      handleLogin();
+      Promise.all([mainApi.getContent(jwt), mainApi.getUserMovies(jwt)])                           // проверка токена и переход в Main
+      .then(([ userInfo, movies ]) => {
+        if (userInfo){
+          setCurrentUser(userInfo);
+          setUserMovies(movies);
+          console.log('tokenCheck');
+        }
+      })
+      .catch((err) => {
+        setError(err.message);
+        setIsError(true);
+        setInfoTooltipOpened(true);
+      })
+      .finally(()=> {
+        setIsLoading(false);
+      });
+    }
+  }
+
+  function handleSignOut() {
+    setLoggedIn(false);
+    setCurrentUser({});
+    localStorage.clear();
+    history.push('/');
+  };
+
+  function handleUpdateUser(name, email) {
+    mainApi.setUserInfo(name, email)
+      .then(data => {
+        setCurrentUser(data);
+        setError("Обновление прошло успешно!");
+        setIsError(false);
+        setInfoTooltipOpened(true);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setIsError(true);
+        setInfoTooltipOpened(true);
+      });
+  }
+
+
   return (
-    <div className='App'>
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className='App'>
         {isLoading ? (
           <Preloader />
         ) : (
           <>
-            <Header moviesPage={moviesPage} loggedIn={loggedIn} />
+            <Header loggedIn={loggedIn} />
             <Switch>
-              {/* <ProtectedRoute
-                exact path='/movies'
-                loggedIn={loggedIn}
-                component={Movies}
-                MoviesList={savedMoviesList}
-                isLoading={isLoading}
-              />
-
-              <ProtectedRoute
-                exact path='/saved-movies'
-                loggedIn={loggedIn}
-                component={SavedMovies}
-                SavedMoviesList={savedMoviesList}
-                isLoading={isLoading}
-              />
-
-              <ProtectedRoute
-                exact path='/profile'
-                loggedIn={loggedIn}
-                component={Profile}
-              /> */}
-              <Route path='/movies'>
-                <Movies moviesPage={moviesPage} handleMoviesPage={setMoviesPage} SavedMoviesPage={false} MoviesList={savedMoviesList} isLoading={isLoading}/>
-              </Route>
-
-              <Route path='/saved-movies'>
-                <SavedMovies moviesPage={moviesPage} handleMoviesPage={setMoviesPage} SavedMoviesPage={true} SavedMoviesList={savedMoviesList} isLoading={isLoading}/>
-              </Route>
-
-              <Route path='/profile'>
-                <Profile moviesPage={moviesPage} handleMoviesPage={setMoviesPage}/>
-              </Route>
-
-              <Route path='/' exact>
-                <Main moviesPage={moviesPage} handleMoviesPage={setMoviesPage}/>
+              if(currentUser!==={}) {
+                <ProtectedRoute
+                  path='/movies'
+                  loggedIn={loggedIn}
+                  component={Movies}
+                  SavedMoviesPage={false}
+                  MoviesList={savedMoviesList}
+                  isLoading={isLoading}
+                />
+                }
+                if(currentUser!==={}) {
+                <ProtectedRoute
+                  path='/saved-movies'
+                  loggedIn={loggedIn}
+                  component={SavedMovies}
+                  SavedMoviesPage={true}
+                  SavedMoviesList={savedMoviesList}
+                  isLoading={isLoading}
+                />
+                }
+                if(currentUser!==={}) {
+                <ProtectedRoute
+                  path='/profile'
+                  loggedIn={loggedIn}
+                  component={Profile}
+                  handleSignOut={handleSignOut}
+                  handleUpdateUser={handleUpdateUser}
+                  isError={isError}
+                />
+                }
+              <Route exact path='/'>
+                <Main />
               </Route>
 
               <Route path='/signup'>
-                <Register />
+                <Register onSubmit={handleRegisterUser} />
               </Route>
 
               <Route path='/signin'>
-                <Login />
+                <Login onSubmit={handleAuthoriseUser}/>
               </Route>
 
               <Route path="*">
@@ -328,11 +427,12 @@ function App() {
               </Route>
 
             </Switch>
-            <InfoTooltip isOpen={isInfoTooltipOpen} onClose={closePopup}/>
+            <InfoTooltip isError={isError} isOpen={isInfoTooltipOpen} message={error} onClose={closePopup}/>
             <Footer />
           </>
         )}
       </div>
+    </CurrentUserContext.Provider>
   );
 }
 

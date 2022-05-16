@@ -1,16 +1,23 @@
 import './Register.css';
 import { Link } from 'react-router-dom';
 import Logo from '../Logo/Logo';
+import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 
 
-function Register() {
+function Register(props) {
+  const {values, errors, isValid, handleChange} = useFormWithValidation();
 
+  // ---ОБРАБОТЧИКИ---
+  function handleSubmit(e) {
+    e.preventDefault();
+    props.onSubmit(values.name, values.email, values.password);
+  };
 
   return (
     <section className='Register'>
       <Logo />
       <h2 className='Register__title'>Добро пожаловать!</h2>
-      <form className='Register__form'>
+      <form className='Register__form' onSubmit={handleSubmit}>
         <label className='Register__label'>Имя
             <input
               id='name'
@@ -21,10 +28,10 @@ function Register() {
               maxLength='30'
               required
               pattern='^[A-Za-zА-Яа-яЁё /s -]+$'
-              value='Имя'
+              onChange={handleChange}
             />
             <span id='name-error' className='Register__error'>
-              Ошибка...
+              {errors.name || ''}
             </span>
         </label>
         <label className='Register__label'>E-mail
@@ -36,10 +43,10 @@ function Register() {
             minLength='2'
             maxLength='30'
             required
-            value='почта'
+            onChange={handleChange}
           />
           <span id='email-error' className='Register__error'>
-            Ошибка...
+            {errors.email || ''}
           </span>
         </label>
         <label className='Register__label'>Пароль
@@ -51,16 +58,17 @@ function Register() {
             minLength='4'
             maxLength='20'
             required
-            value='пароль'
+            onChange={handleChange}
           />
           <span id='password-error' className='Register__error'>
-            Ошибка...
+            {errors.password || ''}
           </span>
         </label>
 
         <button
           className='Register__submit-button app__link'
           type='submit'
+          disabled={!isValid}
         >
           Зарегистрироваться
         </button>

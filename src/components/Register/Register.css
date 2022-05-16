@@ -53,13 +53,17 @@
   border-bottom: 1px solid  #000 ;
 }
 
+.Register__input:invalid{
+  color: #FF4062;
+}
+
 .Register__error{
   font-weight: 400;
   font-size: 10px;
   line-height: 12px;
   color: #EE3465;
   position: absolute;
-  top: 48px;
+  top: 46px;
   left: 0;
 }
 
@@ -72,6 +76,11 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;
+}
+
+.Register__submit-button:disabled{
+  opacity: .2;
+  cursor: default;
 }
 
 
