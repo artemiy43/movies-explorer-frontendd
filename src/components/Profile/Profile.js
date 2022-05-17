@@ -4,11 +4,12 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 
 function Profile({handleSignOut, handleUpdateUser, isError}) {
-  console.log('profile');
+
   const [isInputActive, setIsInputActive] = React.useState(false);
   const currentUser = React.useContext(CurrentUserContext);
   const {values, errors, isValid, handleChange, setValues, setIsValid} = useFormWithValidation();
 
+  // забираем значения юзера
   React.useEffect(() => {
     if (currentUser) {
       setValues({
@@ -41,7 +42,8 @@ function Profile({handleSignOut, handleUpdateUser, isError}) {
   function handleRedactClick() {
     setIsInputActive(true);
   };
-//${currentUser.name}
+
+
   return (
     <section className='profile'>
       <div className='profile__box'>

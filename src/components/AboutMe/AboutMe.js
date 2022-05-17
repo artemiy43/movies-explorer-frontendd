@@ -4,7 +4,6 @@ import me from '../../images/me.jpg';
 
 function AboutMe() {
 
-  //---РАЗМЕТКА JSX---
   return (
     <section className='about-me section__content'>
       <h2 className='section__title'>Студент</h2>

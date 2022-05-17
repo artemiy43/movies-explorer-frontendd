@@ -7,7 +7,6 @@ function Login(props) {
 
   const {values, errors, isValid, handleChange} = useFormWithValidation();
 
-  // ---ОБРАБОТЧИКИ---
   function handleSubmit(e) {
     e.preventDefault();
     props.onSubmit(values.email, values.password);

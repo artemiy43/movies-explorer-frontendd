@@ -9,7 +9,7 @@ function Footer() {
       <footer className='footer section__content'>
         <h4 className='footer__title'>Учебный проект Яндекс.Практикум х BeatFilm.</h4>
         <div className='footer__flex-box'>
-          <p className='footer__year'> &copy; 2020</p>
+          <p className='footer__year'> &copy; 2022</p>
           <ul className='footer__links'>
             <li className='footer__item'>
               <a className='footer__link app__link-outside' href='https://praktikum.yandex.ru' target='_blank' rel='noopener noreferrer'>Яндекс.Практикум</a>

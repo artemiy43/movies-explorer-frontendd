@@ -17,6 +17,24 @@
   justify-items: center;
 }
 
+.movies-list__message{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  max-width: 380px;
+  text-align: center;
+  color: #000;
+}
+
+.movies-list__message_type_err{
+  color: #FF004C;
+}
+
 .movies-list__box_saved-page {
   padding-bottom: 250px;
 }

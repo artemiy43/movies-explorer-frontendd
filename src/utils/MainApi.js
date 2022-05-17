@@ -44,7 +44,7 @@ class MainApi {
     });
   };
 
-  getContent(token) {                     // функция для проверки токена
+  getContent(token) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
       headers: {
@@ -57,7 +57,7 @@ class MainApi {
     });
   };
 
-  getUserMovies(token) {                                                        //метод для получения карточек
+  getUserMovies(token) {                                                        //метод для получения фильмов
     return fetch(`${this._baseUrl}/movies`, {
       method: 'GET',
       headers: {
@@ -69,6 +69,57 @@ class MainApi {
       return this._checkStatus(res);
     });
   }
+
+  saveUserMovie({                                     //метод для сохранения фильма
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailerLink,
+    nameRU,
+    nameEN,
+    thumbnail,
+    id
+    },token) {
+    return fetch(`${this._baseUrl}/movies`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': this._contentType
+      },
+      body: JSON.stringify({
+        country: country || 'No country',
+        director,
+        duration,
+        year,
+        description,
+        image,
+        trailerLink: trailerLink,
+        nameRU: nameRU || 'No RUname',
+        nameEN: nameEN || 'No ENname',
+        thumbnail,
+        movieId: id,
+      })
+    })
+    .then((res) =>{
+      return this._checkStatus(res);
+    });
+  }
+
+  deleteMovie(movieId, token) {                                       // метод для удаления фильма
+    return fetch(`${this._baseUrl}/movies/${movieId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': this._contentType
+      }
+    })
+    .then((res) =>{
+      return this._checkStatus(res);
+    });
+  };
 
   setUserInfo(name, email) {                                           //метод для установки новой информации о пользователе
     return fetch(`${this._baseUrl}/users/me`, {

@@ -1,5 +1,5 @@
 import React from 'react';
-
+// функция для валидации форм
 export function useFormWithValidation() {
 
   const [values, setValues] = React.useState({});

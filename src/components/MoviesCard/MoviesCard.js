@@ -1,6 +1,5 @@
 import './MoviesCard.css';
 import { getTime } from '../../utils/utils';
-import pic from '../../images/pic_1.png';      // для пробного просмотра
 
 function MoviesCard({ card, onLike, onDelete, liked, savedPage }) {
   function handleLikeClick() {
@@ -14,7 +13,7 @@ function MoviesCard({ card, onLike, onDelete, liked, savedPage }) {
   return (
     <article className='movie'>
       <a className='movie__link' href={card.trailer || card.trailerLink} target='_blank' rel='noreferrer'>
-        <img className='movie__pic' src={pic} alt='Фильм'/>
+        <img className='movie__pic' src={`${card.image}`} alt='Фильм'/>
       </a>
       <div className='movie__bottom'>
         <div className='movie__info'>
