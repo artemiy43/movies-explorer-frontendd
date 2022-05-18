@@ -2,7 +2,7 @@ import './SavedMovies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import React from 'react';
-import { filterOnWord } from '../../utils/utils';
+import { filterOnWord, filterOnDuration } from '../../utils/utils';
 
 function SavedMovies({ SavedMoviesPage, SavedMoviesList, isLoading, isErrorMovies, onDeleteClick}) {
 
@@ -12,7 +12,8 @@ function SavedMovies({ SavedMoviesPage, SavedMoviesList, isLoading, isErrorMovie
 
   React.useEffect(() => {
     const arr = filterOnWord(SavedMoviesList, keyword, shortFilms);
-    setFilteredMovies(arr);
+    // setFilteredMovies(arr);
+    setFilteredMovies(shortFilms === 'on' ? filterOnDuration(arr) : arr);
   }, [keyword, shortFilms, SavedMoviesList]);
 
   // обработчик отправки формы

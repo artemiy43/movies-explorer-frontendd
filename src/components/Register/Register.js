@@ -1,11 +1,18 @@
 import './Register.css';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Logo from '../Logo/Logo';
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
-
+import React from 'react';
 
 function Register(props) {
   const {values, errors, isValid, handleChange} = useFormWithValidation();
+
+  const history = useHistory();
+
+  React.useEffect(()=> {               //если меняется loggedIn
+    if (props.loggedIn)                      // если true
+      history.push('/movies');           // переходим
+  },[props.loggedIn, history]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -42,6 +49,7 @@ function Register(props) {
             minLength='2'
             maxLength='30'
             required
+            pattern='^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
             onChange={handleChange}
           />
           <span id='email-error' className='Register__error'>

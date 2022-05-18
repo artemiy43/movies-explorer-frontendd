@@ -27,10 +27,10 @@ function App() {
   const [userMovies, setUserMovies] = React.useState([]);                               // стейт для фильмов пользователя
   const history = useHistory();
 
-  React.useEffect(()=> {               //если меняется loggedIn
-    if (loggedIn)                      // если true
-      history.push('/movies');           // переходим
-  },[loggedIn]);
+  // React.useEffect(()=> {               //если меняется loggedIn
+  //   if (loggedIn)                      // если true
+  //     history.push('/movies');           // переходим
+  // },[loggedIn]);
 
   React.useEffect(()=> {               //при монтировании app
     tokenCheck();                      // проверяем токен
@@ -88,6 +88,7 @@ function App() {
           setCurrentUser(userInfo);
           setUserMovies(movies);
           setIsErrorMovies(false);
+          history.push('/movies');
         }
       })
       .catch((err) => {                                                           // если возникает ошибка - показываем
@@ -195,11 +196,11 @@ function App() {
               </Route>
 
               <Route path='/signup'>
-                <Register onSubmit={handleRegisterUser} />
+                <Register loggedIn={loggedIn} onSubmit={handleRegisterUser} />
               </Route>
 
               <Route path='/signin'>
-                <Login onSubmit={handleAuthoriseUser}/>
+                <Login loggedIn={loggedIn} onSubmit={handleAuthoriseUser}/>
               </Route>
 
               <Route path="*">

@@ -1,12 +1,18 @@
 import './Login.css';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Logo from '../Logo/Logo';
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
+import React from 'react';
 
 function Login(props) {
-
   const {values, errors, isValid, handleChange} = useFormWithValidation();
 
+  const history = useHistory();
+
+  React.useEffect(()=> {               //если меняется loggedIn
+    if (props.loggedIn)                      // если true
+      history.push('/movies');           // переходим
+  },[props.loggedIn, history]);
   function handleSubmit(e) {
     e.preventDefault();
     props.onSubmit(values.email, values.password);
