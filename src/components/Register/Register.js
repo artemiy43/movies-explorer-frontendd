@@ -8,11 +8,18 @@ function Register(props) {
   const {values, errors, isValid, handleChange} = useFormWithValidation();
 
   const history = useHistory();
-
+  console.log("register1");
   React.useEffect(()=> {               //если меняется loggedIn
     if (props.loggedIn)                      // если true
       history.push('/movies');           // переходим
-  },[props.loggedIn, history]);
+    console.log("register2");
+
+    return () => {
+      console.log("register3");
+    };
+  },[]);
+
+
 
   function handleSubmit(e) {
     e.preventDefault();

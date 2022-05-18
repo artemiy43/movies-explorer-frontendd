@@ -65,6 +65,8 @@ function App() {
     mainApi.authorize(email, password)            // авторизируемся
     .then((data) => {
       localStorage.setItem('jwt', data.token);   // сохраняем токен в хранилище
+      handleLogin();
+      history.push('/movies');
       tokenCheck();                              // проверяем токен
     })
     .catch((err) => {                              // если возникает ошибка - показываем
@@ -88,7 +90,6 @@ function App() {
           setCurrentUser(userInfo);
           setUserMovies(movies);
           setIsErrorMovies(false);
-          history.push('/movies');
         }
       })
       .catch((err) => {                                                           // если возникает ошибка - показываем

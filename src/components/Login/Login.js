@@ -9,10 +9,11 @@ function Login(props) {
 
   const history = useHistory();
 
-  React.useEffect(()=> {               //если меняется loggedIn
-    if (props.loggedIn)                      // если true
-      history.push('/movies');           // переходим
-  },[props.loggedIn, history]);
+  // React.useEffect(()=> {               //если меняется loggedIn
+  //   if (props.loggedIn)                      // если true
+  //     history.push('/movies');           // переходим
+  // },[props.loggedIn, history]);
+
   function handleSubmit(e) {
     e.preventDefault();
     props.onSubmit(values.email, values.password);
