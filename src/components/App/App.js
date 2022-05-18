@@ -27,11 +27,6 @@ function App() {
   const [userMovies, setUserMovies] = React.useState([]);                               // стейт для фильмов пользователя
   const history = useHistory();
 
-  // React.useEffect(()=> {               //если меняется loggedIn
-  //   if (loggedIn)                      // если true
-  //     history.push('/movies');           // переходим
-  // },[loggedIn]);
-
   React.useEffect(()=> {               //при монтировании app
     tokenCheck();                      // проверяем токен
   },[]);

@@ -12,7 +12,6 @@ function SavedMovies({ SavedMoviesPage, SavedMoviesList, isLoading, isErrorMovie
 
   React.useEffect(() => {
     const arr = filterOnWord(SavedMoviesList, keyword, shortFilms);
-    // setFilteredMovies(arr);
     setFilteredMovies(shortFilms === 'on' ? filterOnDuration(arr) : arr);
   }, [keyword, shortFilms, SavedMoviesList]);
 

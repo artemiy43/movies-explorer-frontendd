@@ -9,10 +9,10 @@ function Login(props) {
 
   const history = useHistory();
 
-  // React.useEffect(()=> {               //если меняется loggedIn
-  //   if (props.loggedIn)                      // если true
-  //     history.push('/movies');           // переходим
-  // },[props.loggedIn, history]);
+  React.useEffect(()=> {               //если меняется loggedIn
+    if (props.loggedIn)                      // если true
+      history.push('/movies');           // переходим
+  },[]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -33,6 +33,7 @@ function Login(props) {
             minLength='2'
             maxLength='30'
             required
+            pattern='^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
             onChange={handleChange}
           />
           <span id='email-error' className='Login__error'>
