@@ -50,6 +50,16 @@
   outline: none;
 }
 
+.search-form__error{
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #FF4062;
+  position: absolute;
+  top: 50px;
+  left: 24px;
+}
+
 .search-form__btn {
   background-image: url(../../images/find_icon_white.svg);
   background-repeat: no-repeat;
@@ -85,58 +95,62 @@
   margin: 0 0 0 14px;
 }
 
-.search-form__switch {
-  margin-left: 29px;
-  position: relative;
-  display: inline-block;
-  width: 36px;
+.search-form__switch{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
   height: 20px;
-}
-
-.search-form__switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.search-form__slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+  width: 36px;
+  margin: 0;
+  background-color: #e8e8e8;
   border-radius: 20px;
+  /* padding: 6px; */
+  position: relative;
+  margin-left: 29px;
 }
 
-.search-form__slider:before {
-  position: absolute;
-  content: "";
-  height: 16px;
-  width: 16px;
-  left: 2px;
-  bottom: 2px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-  border-radius: 50%;
-}
-
-input:checked + .search-form__slider {
+.search-form__switch_active{
   background-color: #2BE080;
 }
 
-input:focus + .search-form__slider {
-  box-shadow: 0 0 1px #2BE080;
+.search-form__radio{
+  position: absolute;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  height: 20px;
+  width: 50px;
+  opacity: 0;
+  z-index: 3;
 }
 
-input:checked + .search-form__slider:before {
-  -webkit-transform: translateX(16px);
-  -ms-transform: translateX(16px);
-  transform: translateX(16px);
+.search-form__radio:hover{
+  cursor: pointer;
+}
+
+.search-form__slider{
+  box-sizing: border-box;
+  height: 16px;
+  width: 16px;
+  background-color: #fff;
+  border-radius: 50%;
+  position: relative;
+  left: 3px;
+  z-index: 2;
+  transition: transform .3s ease-in;
+}
+
+.search-form__radio:checked ~ .search-form__slider{
+  left: 3px;
+}
+
+.search-form__radio ~ :checked ~ .search-form__slider{
+  left: 17px;
+}
+
+.search-form__switch .search-form__radio:checked{
+  z-index: 1;
 }
 
 @media screen and (max-width: 800px) {

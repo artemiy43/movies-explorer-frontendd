@@ -6,11 +6,7 @@ import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
 import React from 'react';
 
-function Main({moviesPage, handleMoviesPage}) {
-  React.useEffect(() => {
-    handleMoviesPage(false);
-  },[moviesPage, handleMoviesPage]);
-
+function Main() {
   return(
     <main className='Main'>
       <Promo />

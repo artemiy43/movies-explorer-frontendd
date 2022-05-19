@@ -53,6 +53,10 @@
   border-bottom: 1px solid  #000 ;
 }
 
+.Login__input:invalid{
+  color: #FF4062;
+}
+
 .Login__error{
   font-weight: 400;
   font-size: 10px;
@@ -74,6 +78,10 @@
   line-height: 17px;
 }
 
+.Login__submit-button:disabled{
+  opacity: .2;
+  cursor: default;
+}
 
 .Login__text{
   font-weight: 400;
